@@ -1,6 +1,6 @@
 ﻿namespace ShowPhotoLocation
 {
-   partial class Form1
+   partial class FrmShowPhotoLocation
    {
       /// <summary>
       /// Required designer variable.
@@ -144,17 +144,18 @@
          this.labelStatusStreeViewLink.Name = "labelStatusStreeViewLink";
          this.labelStatusStreeViewLink.Size = new System.Drawing.Size(138, 17);
          this.labelStatusStreeViewLink.Text = "Open Google Street View";
+         this.labelStatusStreeViewLink.Visible = false;
          this.labelStatusStreeViewLink.Click += new System.EventHandler(this.LabelStatusStreeViewLink_Click);
          // 
-         // Form1
+         // frmShowPhotoLocation
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(793, 709);
          this.Controls.Add(this.statusStrip1);
          this.Controls.Add(this.splitContainer1);
-         this.Name = "Form1";
-         this.Text = "Form1";
+         this.Name = "FrmShowPhotoLocation";
+         this.Text = "Show Photo Location";
          this.Load += new System.EventHandler(this.Form1_Load);
          this.splitContainer1.Panel1.ResumeLayout(false);
          this.splitContainer1.Panel2.ResumeLayout(false);

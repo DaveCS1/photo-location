@@ -9,12 +9,12 @@ using Leadtools.Drawing;
 
 namespace ShowPhotoLocation
 {
-   public partial class Form1 : Form
+   public partial class FrmShowPhotoLocation : Form
    {
       private readonly string _projectPath = @"Examples\GIT\ShowPhotoLocation\ShowPhotoLocation\";
       private readonly string _rootPath = @"..\..\..\";
 
-      public Form1()
+      public FrmShowPhotoLocation()
       {
          RasterSupport.SetLicense(
             File.ReadAllBytes(Path.Combine(_rootPath, @"Common\License\leadtools.lic")),
@@ -75,6 +75,7 @@ namespace ShowPhotoLocation
             return;
          }
          labelStatusMapLink.Visible = true;
+         labelStatusStreeViewLink.Visible = true;
 
          UpdateStatusMessage($@"Coordinates for {e.Node.Text}: {latitude:F5}, {longitude:F5}");
          UpdateStatusMapLink(latitude.Value, longitude.Value);
@@ -90,6 +91,7 @@ namespace ShowPhotoLocation
       private void ClearMap(string fileName)
       {
          labelStatusMapLink.Visible = false;
+         labelStatusStreeViewLink.Visible = false;
          webBrowser1.Url = new Uri("about:blank");
          UpdateStatusMessage($@"No GPS information found in {fileName}");
       }
