@@ -23,7 +23,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
+    <OutputPath>..\..\..\..\Bin\Dotnet4\Win32\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -58,6 +58,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GpsTags.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -86,150 +87,54 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\20170618_124308_Rim Trail.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170618_161600.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170619_083152.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170619_091814_Main Street.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170619_181013_South Mikes Pike Street.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170619_181203_South Mikes Pike Street.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170619_181425_South Beaver Street.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170619_181455_West Phoenix Avenue.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170619_201042_East Phoenix Avenue.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170620_120339_East 2nd Street_Richtone%28HDR%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170620_123942_East 2nd Street_Richtone%28HDR%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170620_130745_Old Highway 66_Richtone%28HDR%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170620_133941_West Hopi Drive_Richtone%28HDR%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170620_144313.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_104528_15th Street %281%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_104545_15th Street %281%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_112534_East Laughlin Avenue %281%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_141035_Historic Route 66_Richtone%28HDR%29 %281%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_160011_Southwest 6th Avenue_Richtone%28HDR%29 %281%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_163923_South Georgia Street_Richtone%28HDR%29 %281%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_171107_Interstate 40 Frontage Road_Richtone%28HDR%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_171834_Interstate 40 Frontage Road_Richtone%28HDR%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_172106_Indian Hill Road_Richtone%28HDR%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_173018_Richtone%28HDR%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_190532_Richtone%28HDR%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_200803_East 12th Street_Richtone%28HDR%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170622_200814_East 12th Street_Richtone%28HDR%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170623_102405_Richtone%28HDR%29.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170623_120839.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\20170623_131841_West Main Street.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170616_151934.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170616_153959.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170616_173747.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170616_195352.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170617_054234.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170617_074447.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170617_081935.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170617_085447.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170617_100317.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170618_083039.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170618_090403.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170618_090518.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170618_111716.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170618_124655.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\IMG_20170618_142415.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\June 21, 2017 at 0320PM.jpeg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\June 21, 2017 at 0347PM.jpeg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\June 21, 2017 at 0743AM.jpeg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Images\20170618_124308_Rim Trail.jpg" />
+    <Content Include="Images\20170618_161600.jpg" />
+    <Content Include="Images\20170619_083152.jpg" />
+    <Content Include="Images\20170619_091814_Main Street.jpg" />
+    <Content Include="Images\20170619_181013_South Mikes Pike Street.jpg" />
+    <Content Include="Images\20170619_181203_South Mikes Pike Street.jpg" />
+    <Content Include="Images\20170619_181425_South Beaver Street.jpg" />
+    <Content Include="Images\20170619_181455_West Phoenix Avenue.jpg" />
+    <Content Include="Images\20170619_201042_East Phoenix Avenue.jpg" />
+    <Content Include="Images\20170620_120339_East 2nd Street_Richtone%28HDR%29.jpg" />
+    <Content Include="Images\20170620_123942_East 2nd Street_Richtone%28HDR%29.jpg" />
+    <Content Include="Images\20170620_130745_Old Highway 66_Richtone%28HDR%29.jpg" />
+    <Content Include="Images\20170620_133941_West Hopi Drive_Richtone%28HDR%29.jpg" />
+    <Content Include="Images\20170620_144313.jpg" />
+    <Content Include="Images\20170622_104528_15th Street %281%29.jpg" />
+    <Content Include="Images\20170622_104545_15th Street %281%29.jpg" />
+    <Content Include="Images\20170622_112534_East Laughlin Avenue %281%29.jpg" />
+    <Content Include="Images\20170622_141035_Historic Route 66_Richtone%28HDR%29 %281%29.jpg" />
+    <Content Include="Images\20170622_160011_Southwest 6th Avenue_Richtone%28HDR%29 %281%29.jpg" />
+    <Content Include="Images\20170622_163923_South Georgia Street_Richtone%28HDR%29 %281%29.jpg" />
+    <Content Include="Images\20170622_171107_Interstate 40 Frontage Road_Richtone%28HDR%29.jpg" />
+    <Content Include="Images\20170622_171834_Interstate 40 Frontage Road_Richtone%28HDR%29.jpg" />
+    <Content Include="Images\20170622_172106_Indian Hill Road_Richtone%28HDR%29.jpg" />
+    <Content Include="Images\20170622_173018_Richtone%28HDR%29.jpg" />
+    <Content Include="Images\20170622_190532_Richtone%28HDR%29.jpg" />
+    <Content Include="Images\20170622_200803_East 12th Street_Richtone%28HDR%29.jpg" />
+    <Content Include="Images\20170622_200814_East 12th Street_Richtone%28HDR%29.jpg" />
+    <Content Include="Images\20170623_102405_Richtone%28HDR%29.jpg" />
+    <Content Include="Images\20170623_120839.jpg" />
+    <Content Include="Images\20170623_131841_West Main Street.jpg" />
+    <Content Include="Images\IMG_20170616_151934.jpg" />
+    <Content Include="Images\IMG_20170616_153959.jpg" />
+    <Content Include="Images\IMG_20170616_173747.jpg" />
+    <Content Include="Images\IMG_20170616_195352.jpg" />
+    <Content Include="Images\IMG_20170617_054234.jpg" />
+    <Content Include="Images\IMG_20170617_074447.jpg" />
+    <Content Include="Images\IMG_20170617_081935.jpg" />
+    <Content Include="Images\IMG_20170617_085447.jpg" />
+    <Content Include="Images\IMG_20170617_100317.jpg" />
+    <Content Include="Images\IMG_20170618_083039.jpg" />
+    <Content Include="Images\IMG_20170618_090403.jpg" />
+    <Content Include="Images\IMG_20170618_090518.jpg" />
+    <Content Include="Images\IMG_20170618_111716.jpg" />
+    <Content Include="Images\IMG_20170618_124655.jpg" />
+    <Content Include="Images\IMG_20170618_142415.jpg" />
+    <Content Include="Images\June 21, 2017 at 0320PM.jpeg" />
+    <Content Include="Images\June 21, 2017 at 0347PM.jpeg" />
+    <Content Include="Images\June 21, 2017 at 0743AM.jpeg" />
     <Content Include="MapTemplate.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

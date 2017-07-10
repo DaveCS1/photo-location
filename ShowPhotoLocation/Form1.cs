@@ -1,29 +1,30 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using Leadtools;
 using Leadtools.Codecs;
 using Leadtools.Controls;
-using Leadtools;
 using Leadtools.Drawing;
 
 namespace ShowPhotoLocation
 {
    public partial class Form1 : Form
    {
-      private readonly string _rootPath = Application.StartupPath;
+      private readonly string _projectPath = @"Examples\GIT\ShowPhotoLocation\ShowPhotoLocation\";
+      private readonly string _rootPath = @"..\..\..\";
 
       public Form1()
       {
          RasterSupport.SetLicense(
-            File.ReadAllBytes(@"C:\LEADTOOLS 19\Common\License\leadtools.lic"),
-            File.ReadAllText(@"C:\LEADTOOLS 19\Common\License\leadtools.lic.key")
-            );
+            File.ReadAllBytes(Path.Combine(_rootPath, @"Common\License\leadtools.lic")),
+            File.ReadAllText(Path.Combine(_rootPath, @"Common\License\leadtools.lic.key")));
 
          InitializeComponent();
 
          webBrowser1.ScriptErrorsSuppressed = true;
          webBrowser1.ScrollBarsEnabled = true;
-        
+
          RasterPaintProperties paintProperties = RasterPaintProperties.Default;
          paintProperties.PaintDisplayMode = RasterPaintDisplayModeFlags.Bicubic;
          paintProperties.PaintEngine = RasterPaintEngine.GdiPlus;
@@ -32,10 +33,9 @@ namespace ShowPhotoLocation
          rasterPictureBox1.SizeMode = RasterPictureBoxSizeMode.Fit;
       }
 
-
       private void Form1_Load(object sender, EventArgs e)
       {
-         ListDirectory(treeView1, Path.Combine(_rootPath, "Images"));
+         ListDirectory(treeView1, Path.Combine(_rootPath, _projectPath, "Images"));
       }
 
       private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -44,8 +44,8 @@ namespace ShowPhotoLocation
          if (e.Node == null)
             return;
 
-         string fullPath = Path.Combine(_rootPath, e.Node.FullPath);
-         
+         string fullPath = Path.Combine(_rootPath, _projectPath, e.Node.FullPath);
+
          if (!File.Exists(fullPath))
             return;
 
@@ -54,8 +54,10 @@ namespace ShowPhotoLocation
 
          try
          {
-            using (RasterCodecs codecs = new RasterCodecs())
+            using (var codecs = new RasterCodecs())
+            {
                rasterPictureBox1.Image = codecs.Load(fullPath);
+            }
          }
          catch (Exception exception)
          {
@@ -63,9 +65,9 @@ namespace ShowPhotoLocation
             UpdateStatusMessage(exception.Message);
             return;
          }
-         
-         double? longitude = GetLongitude(fullPath);
-         double? latitude = GetLatitude(fullPath);
+
+         double? longitude = GpsTags.GetLongitude(fullPath);
+         double? latitude = GpsTags.GetLatitude(fullPath);
 
          if (!longitude.HasValue || !latitude.HasValue)
          {
@@ -78,26 +80,11 @@ namespace ShowPhotoLocation
          UpdateStatusMapLink(latitude.Value, longitude.Value);
 
          string targetHtmlFile = Path.Combine(Application.StartupPath, "map.html");
-         CreateHtmlFile("MapTemplate.html", targetHtmlFile, latitude.ToString(), longitude.ToString(), e.Node.Name, "", "", fullPath);
+         CreateHtmlFile("MapTemplate.html", targetHtmlFile, 
+            latitude.ToString(), longitude.ToString(), 
+            e.Node.Name);
 
          webBrowser1.Url = new Uri(targetHtmlFile);
-      }
-
-      private static void ListDirectory(TreeView treeView, string path)
-      {
-         treeView.Nodes.Clear();
-         var rootDirectoryInfo = new DirectoryInfo(path);
-         treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
-      }
-
-      private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
-      {
-         var directoryNode = new TreeNode(directoryInfo.Name);
-         foreach (var directory in directoryInfo.GetDirectories())
-            directoryNode.Nodes.Add(CreateDirectoryNode(directory));
-         foreach (var file in directoryInfo.GetFiles())
-            directoryNode.Nodes.Add(new TreeNode(file.Name));
-         return directoryNode;
       }
 
       private void ClearMap(string fileName)
@@ -114,84 +101,9 @@ namespace ShowPhotoLocation
 
       private void UpdateStatusMapLink(double latitude, double longitude)
       {
-         
          labelStatusMapLink.Tag = $@"http://maps.google.com/?q={latitude},{longitude}";
          labelStatusStreeViewLink.Tag =
             $@"http://maps.google.com/?q=&layer=c&cbll={latitude},{longitude}&cbp=11,0,0,0,0";
-      }
-
-      private static double? GetLongitude(string imagePath)
-      {
-         try
-         {
-            using (var codecs = new RasterCodecs())
-            {
-               RasterMetadataURational[] data = 
-                  codecs.ReadComment(imagePath, 1, RasterCommentMetadataType.GpsLongitude)?.ToURational();
-               string refData = 
-                  codecs.ReadComment(imagePath, 1, RasterCommentMetadataType.GpsLongitudeRef)?.ToAscii();
-               return ExifGpsToDouble(refData, data);
-            }
-         }
-         catch (ArgumentException)
-         {
-            return null;
-         }
-      }
-
-      private static double? GetLatitude(string imagePath)
-      {
-         try
-         {
-            using (var codecs = new RasterCodecs())
-            {
-               RasterMetadataURational[] data =
-                  codecs.ReadComment(imagePath, 1, RasterCommentMetadataType.GpsLatitude)?.ToURational();
-               string refData =
-                  codecs.ReadComment(imagePath, 1, RasterCommentMetadataType.GpsLatitudeRef)?.ToAscii();
-               return ExifGpsToDouble(refData, data);
-            }
-         }
-         catch (ArgumentException)
-         {
-            return null;
-         }
-      }
-
-      private static double? ExifGpsToDouble(string itemRef, RasterMetadataURational[] items)
-      {
-         if (string.IsNullOrWhiteSpace(itemRef) || items == null)
-            throw new ArgumentException();
-
-         double degrees = (double) items[0].Numerator / items[0].Denominator;
-         if (degrees > 360) return null;
-         double minutes = (double) items[1].Numerator / items[1].Denominator;
-         double seconds = (double) items[2].Numerator / items[2].Denominator;
-
-         double coordinate = degrees + (minutes / 60d) + (seconds / 3600d);
-         
-         if (itemRef == "S" || itemRef == "W")
-            coordinate = coordinate * -1;
-
-         return coordinate;
-      }
-
-      private static void CreateHtmlFile(string templateFile, string targetFile, string la, string lo,
-                                        string title, string city, string marker, string imagePath)
-      {
-         if (!File.Exists(templateFile)) return;
-         using (StreamReader reader = new StreamReader(templateFile))
-         {
-            string htmlString = reader.ReadToEnd()
-                                      .Replace("[la]", la)
-                                      .Replace("[lo]", lo)
-                                      .Replace("[title]", title)
-                                      .Replace("[city]", city)
-                                      .Replace("[image]", imagePath)
-                                      .Replace("[marker]", marker);
-            using (var writer = new StreamWriter(targetFile))
-               writer.Write(htmlString);
-         }
       }
 
       private void LabelStatusMapLink_Click(object sender, EventArgs e)
@@ -199,19 +111,51 @@ namespace ShowPhotoLocation
          // if google maps gives you grief about the webbrowser control being too old,
          // read this and make it ie11: 
          // https://weblog.west-wind.com/posts/2011/May/21/Web-Browser-Control-Specifying-the-IE-Version
-         string url = labelStatusMapLink.Tag as string;
+         var url = labelStatusMapLink.Tag as string;
          if (url == null) return;
          webBrowser1.Url = new Uri(url);
       }
 
       private void LabelStatusStreeViewLink_Click(object sender, EventArgs e)
       {
-         string url = labelStatusStreeViewLink.Tag as string;
+         var url = labelStatusStreeViewLink.Tag as string;
          if (url == null) return;
-         //webBrowser1.Url = new Uri(url);
-         System.Diagnostics.Process.Start(url);
+         Process.Start(url);
       }
 
+      private static void ListDirectory(TreeView treeView, string path)
+      {
+         treeView.Nodes.Clear();
+         var rootDirectoryInfo = new DirectoryInfo(path);
+         treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
+      }
+
+      private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
+      {
+         var directoryNode = new TreeNode(directoryInfo.Name);
+         foreach (DirectoryInfo directory in directoryInfo.GetDirectories())
+            directoryNode.Nodes.Add(CreateDirectoryNode(directory));
+         foreach (FileInfo file in directoryInfo.GetFiles())
+            directoryNode.Nodes.Add(new TreeNode(file.Name));
+         return directoryNode;
+      }
+
+      private static void CreateHtmlFile(string templateFile, string targetFile, string la, string lo,
+                                         string title)
+      {
+         if (!File.Exists(templateFile)) return;
+         using (var reader = new StreamReader(templateFile))
+         {
+            string htmlString = reader.ReadToEnd()
+                                      .Replace("$la$", la)
+                                      .Replace("$lo$", lo)
+                                      .Replace("$title$", title);
+            using (var writer = new StreamWriter(targetFile))
+            {
+               writer.Write(htmlString);
+            }
+         }
+      }
 
    }
 }
