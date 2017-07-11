@@ -11,7 +11,7 @@ namespace ShowPhotoLocation
 {
    public partial class FrmShowPhotoLocation : Form
    {
-      private readonly string _projectPath = @"Examples\Github\photo-location-master\";
+      private readonly string _projectPath = @"Examples\Github\photo-location-master\ShowPhotoLocation\";
       private readonly string _rootPath = @"..\..\..\";
 
       public FrmShowPhotoLocation()
